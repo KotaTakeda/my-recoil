@@ -6,12 +6,19 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { todoListState } from "./states/todoList";
+import { 
+  todoListState,
+  todoListFilterState,
+  filteredTodoListState,
+  todoListStatsState
+} from "./states/todoList";
 
 export default function TodoListApp() {
   return (
     <RecoilRoot>
       <div>Todo List</div>
+      <TodoListStats />
+      <TodoListFilters />
       <TodoItemCreator />
       <TodoList />
     </RecoilRoot>
@@ -37,7 +44,7 @@ export default function TodoListApp() {
 // }
 
 function TodoList() {
-  const todoList = useRecoilValue(todoListState);
+  const todoList = useRecoilValue(filteredTodoListState);
 
   return (
     <>
@@ -48,8 +55,47 @@ function TodoList() {
   );
 }
 
+function TodoListStats() {
+  const {
+    totalNum,
+    totalCompletedNum,
+    totalUncompletedNum,
+    percentCompleted,
+  } = useRecoilValue(todoListStatsState);
+
+  const formattedPercentCompleted = Math.round(percentCompleted);
+
+  return (
+    <ul>
+      <li>Total items: {totalNum}</li>
+      <li>Items completed: {totalCompletedNum}</li>
+      <li>Items not completed: {totalUncompletedNum}</li>
+      <li>Percent completed: {formattedPercentCompleted}</li>
+    </ul>
+  );
+}
+
+function TodoListFilters() {
+  const [filter, setFilter] = useRecoilState(todoListFilterState);
+
+  const updateFilter = ({target: {value}}) => {
+    setFilter(value);
+  };
+
+  return (
+    <>
+      Filter:
+      <select value={filter} onChange={updateFilter}>
+        <option value="Show All">All</option>
+        <option value="Show Completed">Completed</option>
+        <option value="Show Uncompleted">Uncompleted</option>
+      </select>
+    </>
+  );
+}
+
 function TodoItemCreator() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(''); // なぜatomを使わないのか？ local stateだからか？
   const setTodoList = useSetRecoilState(todoListState);
 
   const addItem = () => {
@@ -76,7 +122,7 @@ function TodoItemCreator() {
   )
 };
 
-// 良くない
+// global 良くない
 let id = 0;
 function getId() {
   return id++;
