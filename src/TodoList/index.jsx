@@ -8,6 +8,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
+import { todoListState } from "./states/todoList";
 
 export default function TodoListApp() {
   return (
@@ -16,11 +17,6 @@ export default function TodoListApp() {
     </RecoilRoot>
   );
 }
-
-const todoListState = atom({
-  key: 'todoListState',
-  default: [],
-});
 
 function TodoList() {
   const todoList = useRecoilValue(todoListState);
