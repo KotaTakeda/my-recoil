@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import {
   RecoilRoot,
-  atom,
-  selector,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
@@ -13,21 +11,36 @@ import { todoListState } from "./states/todoList";
 export default function TodoListApp() {
   return (
     <RecoilRoot>
+      <div>Todo List</div>
+      <TodoItemCreator />
       <TodoList />
     </RecoilRoot>
   );
 }
+
+// この実装だとTodoが編集された時にTodoItemCreatorも再renderingされる．
+// function TodoList() {
+//   const todoList = useRecoilValue(todoListState);
+
+//   return (
+//     <>
+//       <div>Todo List</div>
+//       {/* <TodoListStats /> */}
+//       {/* <TodoListFilters /> */}
+//       <TodoItemCreator />
+
+//       {todoList.map((todoItem) => (
+//         <TodoItem key={todoItem.id} item={todoItem} />
+//       ))}
+//     </>
+//   );
+// }
 
 function TodoList() {
   const todoList = useRecoilValue(todoListState);
 
   return (
     <>
-      <div>Todo List</div>
-      {/* <TodoListStats /> */}
-      {/* <TodoListFilters /> */}
-      <TodoItemCreator />
-
       {todoList.map((todoItem) => (
         <TodoItem key={todoItem.id} item={todoItem} />
       ))}
