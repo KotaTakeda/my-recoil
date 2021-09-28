@@ -11,13 +11,13 @@ import {
   todoListState,
   todoListFilterState,
   filteredTodoListState,
-  todoListStatsState
+  todoListStatsState,
 } from "./states/todoList";
 
 export default function TodoListApp() {
   return (
     <RecoilRoot>
-      {/* Dev Tool */}
+      {/* Debug用 */}
       <DebugObserver />
       <div>Todo List</div>
       <TodoListStats />
@@ -139,12 +139,20 @@ function TodoItemCreator() {
 // Dev Tool
 function DebugObserver() {
   const snapshot = useRecoilSnapshot();
-  useEffect(() => {
-    console.debug('The following atoms were modified:');
-    for (const node of snapshot.getNodes_UNSTABLE({isModified: true})) {
-      console.debug(node.key, snapshot.getLoadable(node));
-    }
-  }, [snapshot]);
+
+  // 全atomの変更を観測
+  // useEffect(() => {
+  //   console.debug('The following atoms were modified:');
+  //   for (const node of snapshot.getNodes_UNSTABLE({isModified: true})) {
+  //     console.debug(node.key, snapshot.getLoadable(node));
+  //   }
+  // }, [snapshot]);
+
+  // todoListStatsStateの変更を観測
+  // const stats = snapshot.getLoadable(todoListStatsState);
+  // useEffect(() => {
+  //   console.debug('todoListStatsState is modified:', stats);
+  // }, [stats]);
 
   return null;
 }
