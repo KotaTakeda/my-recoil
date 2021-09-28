@@ -1,10 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   RecoilRoot,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
+  useRecoilSnapshot,
 } from 'recoil';
 import { 
   todoListState,
@@ -16,6 +17,8 @@ import {
 export default function TodoListApp() {
   return (
     <RecoilRoot>
+      {/* Dev Tool */}
+      <DebugObserver />
       <div>Todo List</div>
       <TodoListStats />
       <TodoListFilters />
@@ -132,6 +135,19 @@ function TodoItemCreator() {
     </div>
   )
 };
+
+// Dev Tool
+function DebugObserver() {
+  const snapshot = useRecoilSnapshot();
+  useEffect(() => {
+    console.debug('The following atoms were modified:');
+    for (const node of snapshot.getNodes_UNSTABLE({isModified: true})) {
+      console.debug(node.key, snapshot.getLoadable(node));
+    }
+  }, [snapshot]);
+
+  return null;
+}
 
 // global 良くない
 let id = 0;
