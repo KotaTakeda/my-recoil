@@ -68,7 +68,7 @@ function TodoList() {
 // }
 // =================================================================
 
-// NOTE: TodoItemのtextを編集しただけでも再レンダーされる．？
+// NOTE: TodoItemのtextを編集しただけでも再レンダーされる．
 function TodoListStats() {
   const {
     totalNum,
