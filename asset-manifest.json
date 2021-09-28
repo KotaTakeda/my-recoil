@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.js": "/myapp/static/js/main.627934fe.chunk.js",
-    "main.js.map": "/myapp/static/js/main.627934fe.chunk.js.map",
-    "runtime-main.js": "/myapp/static/js/runtime-main.5e6060cf.js",
-    "runtime-main.js.map": "/myapp/static/js/runtime-main.5e6060cf.js.map",
-    "static/js/2.df193e4a.chunk.js": "/myapp/static/js/2.df193e4a.chunk.js",
-    "static/js/2.df193e4a.chunk.js.map": "/myapp/static/js/2.df193e4a.chunk.js.map",
-    "index.html": "/myapp/index.html",
-    "static/js/2.df193e4a.chunk.js.LICENSE.txt": "/myapp/static/js/2.df193e4a.chunk.js.LICENSE.txt"
+    "main.js": "/my-recoil/static/js/main.627934fe.chunk.js",
+    "main.js.map": "/my-recoil/static/js/main.627934fe.chunk.js.map",
+    "runtime-main.js": "/my-recoil/static/js/runtime-main.041e1b3b.js",
+    "runtime-main.js.map": "/my-recoil/static/js/runtime-main.041e1b3b.js.map",
+    "static/js/2.df193e4a.chunk.js": "/my-recoil/static/js/2.df193e4a.chunk.js",
+    "static/js/2.df193e4a.chunk.js.map": "/my-recoil/static/js/2.df193e4a.chunk.js.map",
+    "index.html": "/my-recoil/index.html",
+    "static/js/2.df193e4a.chunk.js.LICENSE.txt": "/my-recoil/static/js/2.df193e4a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.5e6060cf.js",
+    "static/js/runtime-main.041e1b3b.js",
     "static/js/2.df193e4a.chunk.js",
     "static/js/main.627934fe.chunk.js"
   ]
