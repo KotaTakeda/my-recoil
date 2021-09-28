@@ -25,24 +25,6 @@ export default function TodoListApp() {
   );
 }
 
-// この実装だとTodoが編集された時にTodoItemCreatorも再renderingされる．
-// function TodoList() {
-//   const todoList = useRecoilValue(todoListState);
-
-//   return (
-//     <>
-//       <div>Todo List</div>
-//       {/* <TodoListStats /> */}
-//       {/* <TodoListFilters /> */}
-//       <TodoItemCreator />
-
-//       {todoList.map((todoItem) => (
-//         <TodoItem key={todoItem.id} item={todoItem} />
-//       ))}
-//     </>
-//   );
-// }
-
 function TodoList() {
   const todoList = useRecoilValue(filteredTodoListState);
 
@@ -54,6 +36,34 @@ function TodoList() {
     </>
   );
 }
+
+// =================================================================
+// この実装だとTodoが編集された時にTodoListFiltersも再renderingされる．
+// export default function TodoListApp() {
+//   return (
+//     <RecoilRoot>
+//       <TodoList />
+//     </RecoilRoot>
+//   );
+// }
+
+// function TodoList() {
+//   const todoList = useRecoilValue(todoListState);
+
+//   return (
+//     <>
+//       <div>Todo List</div>
+//       <TodoListStats />
+//       <TodoListFilters />
+//       <TodoItemCreator />
+
+//       {todoList.map((todoItem) => (
+//         <TodoItem key={todoItem.id} item={todoItem} />
+//       ))}
+//     </>
+//   );
+// }
+// =================================================================
 
 // NOTE: TodoItemのtextを編集しただけでも再レンダーされる．？
 function TodoListStats() {
