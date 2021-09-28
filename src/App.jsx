@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {
   RecoilRoot,
   atom,
@@ -8,7 +7,7 @@ import {
   useRecoilValue,
 } from 'recoil';
 
-function App() {
+export default function App() {
   return (
     <RecoilRoot>
       <CharacterCounter />
@@ -60,8 +59,3 @@ function CharacterCount() {
 
   return <>Character Count: {count}</>;
 }
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
