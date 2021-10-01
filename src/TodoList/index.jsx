@@ -6,6 +6,8 @@ import {
   useRecoilValue,
   useSetRecoilState,
   useRecoilSnapshot,
+  useRecoilTransactionObserver_UNSTABLE,
+  useGetRecoilValueInfo_UNSTABLE,
 } from 'recoil';
 import { 
   todoListState,
@@ -19,6 +21,8 @@ export default function TodoListApp() {
     <RecoilRoot>
       {/* Debug用 */}
       <DebugObserver />
+      <ButtonToShowCurrentSubscriptions />
+      <SetSameTodoListState />
       <div>Todo List</div>
       <TodoListStats />
       <TodoListFilters />
@@ -136,10 +140,11 @@ function TodoItemCreator() {
   )
 };
 
-// Dev Tool
+// Dev Tool ===================================================
 function DebugObserver() {
   const snapshot = useRecoilSnapshot();
 
+  // useEffectで監視 --------------------------------------------
   // 全atomの変更を観測
   // useEffect(() => {
   //   console.debug('The following atoms were modified:');
@@ -149,13 +154,60 @@ function DebugObserver() {
   // }, [snapshot]);
 
   // todoListStatsStateの変更を観測
+  // useEffectの第２引数は差分検知をObject.isで行っている．
   // const stats = snapshot.getLoadable(todoListStatsState);
   // useEffect(() => {
   //   console.debug('todoListStatsState is modified:', stats);
   // }, [stats]);
+  // ------------------------------------------------------------
 
+  //
+  useRecoilTransactionObserver_UNSTABLE(({ snapshot, previousSnapshot }) => {
+    console.debug('The following atoms were modified:');
+    for (const node of snapshot.getNodes_UNSTABLE()) {
+      // console.debug(node.key, snapshot.getLoadable(node)); // 値
+      console.debug(node.key, snapshot.getInfo_UNSTABLE(node)); // debug用の情報
+    }
+
+    // todoListStatsStateの変更前後を確認できる． 
+    const previousStats = previousSnapshot.getLoadable(todoListStatsState);
+    const currentStats = snapshot.getLoadable(todoListStatsState);
+    if (previousStats.is(currentStats)) { // Object.isで等価性を確認．
+      console.log("Stats is not modified");
+    } else {
+      console.log("Stats is modified");
+    }
+  });
+  
   return null;
 }
+
+function ButtonToShowCurrentSubscriptions() {
+  const getRecoilValueInfo = useGetRecoilValueInfo_UNSTABLE();
+  function onClick() {
+    const {subscribers} = getRecoilValueInfo(todoListState);
+    console.debug(
+      'Current Subscriber Nodes:',
+      Array.from(subscribers.nodes).map(({key})=>key),
+    );
+    console.debug(
+      'Current Subscriber Components:',
+      Array.from(subscribers.components).map(({key})=>key),
+    );
+  }
+
+  return <button onClick={onClick} >See Current Subscribers of todoListState</button>;
+}
+
+function SetSameTodoListState() {
+  const [list, setList] = useRecoilState(todoListState);
+  function onClick() {
+    // setList(list); // 初回以外 isModifiedと判定されない．
+    setList([...list]); // いつもisModifiedと判定される．
+  }
+  return <button onClick={onClick}>Set same todoListState</button>
+}
+// =============================================================
 
 // global 良くない
 let id = 0;

@@ -5,11 +5,15 @@ import {
   selector,
   useRecoilState,
   useRecoilValue,
+  useRecoilTransactionObserver_UNSTABLE,
 } from 'recoil';
 
 export default function App() {
   return (
     <RecoilRoot>
+      {/* Debug用 */}
+      <DebugObserver />
+      <SetSameTextState />
       <CharacterCounter />
     </RecoilRoot>
   );
@@ -27,6 +31,25 @@ function CharacterCounter() {
       <CharacterCount />
     </div>
   );
+}
+
+function DebugObserver() {
+  // 変更された"atom"を出力
+  useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
+    console.debug('The following atoms were modified:');
+    for (const node of snapshot.getNodes_UNSTABLE({isModified: true})) {
+      console.debug(node.key, snapshot.getLoadable(node));
+    }
+  });
+  return null;
+}
+
+function SetSameTextState() {
+  const [text, setText] = useRecoilState(textState);
+  function onClick() {
+    setText(text);
+  }
+  return <button onClick={onClick}>Set same textState</button>
 }
 
 function TextInput() {
