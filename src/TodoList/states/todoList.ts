@@ -14,6 +14,13 @@ type todoListStats = {
   percentCompleted: number,
 }
 
+// atom batting test ============================
+// export const textState = atom<string>({
+//   key: 'textState',
+//   default: 'text in TodoList',
+// });
+// =================================
+
 export const todoListState = atom<TodoItem[]>({
   key: RecoilAtomKeys.TODO_LIST_STATE,
   default: [],

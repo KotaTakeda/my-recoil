@@ -21,7 +21,7 @@ export default function App() {
 
 const textState = atom({
   key: 'textState',
-  default: '',
+  default: 'text in App',
 });
 
 function CharacterCounter() {
